@@ -69,7 +69,6 @@
     
     displayManager = {
       startx.enable = true;
-      # sddm.enable = true;
 
       # NOTE: this might not be needed
       defaultSession = "none+xmonad";
@@ -117,6 +116,7 @@
       firefox
       qutebrowser
       vimb
+      zulip
     ];
   };
 
@@ -131,15 +131,28 @@
     git
     rxvt-unicode
     htop
+    acpi
+    lm_sensors
+    (pass.withExtensions (exts: [ exts.pass-otp ]))
+    vanilla-dmz
+    zathura
+    feh
+    texlive.combined.scheme-full
+    irssi
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
+  programs.gnupg.agent = {
+    enable = true;
   #   enableSSHSupport = true;
-  # };
+  };
+
+  nix.settings = {
+    trusted-users = ["root" "akegalj"];
+    experimental-features = [ "nix-command" "flakes" ];
+  };
 
   # List services that you want to enable:
 
