@@ -89,6 +89,27 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   # services.openssh.settings.PermitRootLogin = "yes";
+
+  # For keter config see https://github.com/NixOS/nixpkgs/blob/nixos-23.05/nixos/modules/services/web-servers/keter/default.nix#L120
+  # and https://github.com/NixOS/nixpkgs/blob/nixos-23.05/nixos/modules/services/web-servers/keter/default.nix#L120
+  # and https://github.com/jappeace/yesod-keter-nix/blob/418b120c47140c0cd196f7eb933ffa192a60dd66/flake.nix
+  systemd.services."job-marketplace" = {
+    description = "Job marketplace";
+    script = let app = import (/home/akegalj/projects/job-marketplace/.); in "${app}/bin/job-marketplace";
+    wantedBy = ["multi-user.target" "ngingx.service" ];
+    serviceConfig = {
+      User = "akegalj";
+      Group = "users";
+      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+      Restart = "always";
+      RestartSec = "10s";
+    };
+    after = [
+      "network.target"
+      "local-fs.target"
+      "postgresql.service"
+    ];
+  };
     
   nix.settings = {
     trusted-users = ["root" "akegalj"];
@@ -96,7 +117,7 @@
   };
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 22 80 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
