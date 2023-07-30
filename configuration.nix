@@ -14,7 +14,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "x220"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -152,6 +152,7 @@
   nix.settings = {
     trusted-users = ["root" "akegalj"];
     experimental-features = [ "nix-command" "flakes" ];
+    allow-import-from-derivation = ["true"];
   };
 
   # List services that you want to enable:
