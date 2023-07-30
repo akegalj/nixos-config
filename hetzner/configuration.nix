@@ -100,7 +100,7 @@
     serviceConfig = {
       User = "akegalj";
       Group = "users";
-      AmbientCapabilities = "CAP_NET_BIND_SERVICE";
+      # AmbientCapabilities = "CAP_NET_BIND_SERVICE";
       Restart = "always";
       RestartSec = "10s";
     };
@@ -117,7 +117,7 @@
   };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 80 ];
+  networking.firewall.allowedTCPPorts = [ 3000 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
