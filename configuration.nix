@@ -81,6 +81,26 @@
     xkbVariant = "";
   };
 
+#  services.keter = {
+#    enable = true;
+#    bundle.appName = "job-marketplace";
+#    bundle.executable = import (/home/akegalj/projects/job-marketplace/.);
+#  };
+#  systemd.services."job-marketplace" = {
+#    description = "Job marketplace";
+#    script = let app = import (/home/akegalj/projects/job-marketplace/.); in "${app}/bin/job-marketplace";
+#    wantedBy = ["multi-user.target" "ngingx.service" ];
+#    serviceConfig = {
+#      Restart = "always";
+#      RestartSec = "10s";
+#    };
+#    after = [
+#      "network.target"
+#      "local-fs.target"
+#      "postgresql.service"
+#    ];
+#  };
+
   # Configure console keymap
   console.keyMap = "croat";
 
