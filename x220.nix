@@ -1,17 +1,9 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
-
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 20;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "x220"; # Define your hostname.
@@ -137,6 +129,10 @@
       qutebrowser
       vimb
       zulip
+      rxvt-unicode
+      zathura
+      feh
+      slock
     ];
   };
 
@@ -145,21 +141,108 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    git
-    rxvt-unicode
-    htop
-    acpi
-    lm_sensors
-    (pass.withExtensions (exts: [ exts.pass-otp ]))
-    vanilla-dmz
-    zathura
-    feh
-    texlive.combined.scheme-full
-    irssi
-  ];
+  environment = {
+    loginShellInit = "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && exec startx";
+    variables = { EDITOR = "vim"; TERM = "xterm"; HISTSIZE = "10000"; BROWSER = "qutebrowser"; };
+    interactiveShellInit = ''
+      set -o vi
+    '';
+    systemPackages = with pkgs; [
+      # NOTE: use vim (not vim-full) if intented use is terminal only
+      (vim-full.customize {
+          # Install plugins for example for syntax highlighting of nix files
+          vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
+            start = [ 
+              vim-nix
+              vim-lastplace
+              vim-ormolu
+              vimwiki
+              editorconfig-vim
+              vim-textobj-user
+              zenburn
+              vim-colors-solarized
+              ctrlp
+            ];
+            opt = [];
+          };
+          vimrcConfig.customRC = ''
+            " your custom vimrc
+            set nocompatible
+            " allow backspacing over everything in insert mode
+            " set ts=2 sts=2 sw=2 expandtab
+            set backspace=indent,eol,start
+            " Turn on syntax highlighting by default
+            filetype plugin indent on     " required!
+            syntax on
+
+            " Tab specific option
+            set tabstop=2                   "A tab is 8 spaces
+            set expandtab                   "Always uses spaces instead of tabs
+            set softtabstop=2               "Insert 2 spaces when tab is pressed
+            set shiftwidth=2               "An indent is 2 spaces
+            set smarttab                    "Indent instead of tab at start of line
+            set shiftround                  "Round spaces to nearest shiftwidth multiple
+            set nojoinspaces                "Don't convert spaces to tabs
+            set nu
+            set ignorecase
+            set smartcase
+            set autoindent
+            nnoremap <C-j> <C-w>j
+            nnoremap <C-k> <C-w>k
+            nnoremap <C-h> <C-w>h
+            nnoremap <C-l> <C-w>l
+            nnoremap <C-w> <C-w>w
+
+            "Use the same symbols as TextMate for tabstops and EOLs
+            " set listchars=tab:▸\ ,eol:¬
+            " set list
+
+
+            "Invisible character colors
+            " highlight NonText guifg=#d2d2d2
+            " highlight SpecialKey guifg=#d2d2d2
+
+
+            " Suffixes that get lower priority when doing tab completion for filenames.
+" These are files we are not likely to want to edit or read.
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+
+            set mouse=a
+
+            " make line navigation ignore line wrap
+            nmap j gj
+            nmap k gk
+
+            let g:ctrlp_switch_buffer = 'et'
+            let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+            let g:ctrlp_cmd = 'CtrlPMixed'
+            set wildignore+=*.pyc,*.pdf,*/env/*,*/js_build/*,*/build/*,*/node_modules/*,*/output/*,*/bower_components/* " ctrlp won't index pyc
+            " set directory=$HOME/.vim/swapfiles//
+            
+            au BufRead /tmp/mutt-* set tw=72
+
+            vnoremap <C-c> "*y
+            noremap <S-Insert> "*p
+
+            set nofixeol
+            set noeol
+
+            let g:ormolu_options = ["--no-cabal"]
+          '';
+        }
+      )
+      wget
+      git
+      htop
+      acpi
+      lm_sensors
+      (pass.withExtensions (exts: [ exts.pass-otp ]))
+      vanilla-dmz
+      texlive.combined.scheme-full
+      irssi
+      ormolu
+    ];
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -173,6 +256,8 @@
     trusted-users = ["root" "akegalj"];
     experimental-features = [ "nix-command" "flakes" ];
     allow-import-from-derivation = ["true"];
+    binary-caches = [ "https://cache.nixos.org" "https://nixcache.reflex-frp.org" ];
+    binary-cache-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
   };
 
   # List services that you want to enable:
