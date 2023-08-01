@@ -11,6 +11,9 @@
 
   networking.networkmanager.enable = true;
 
+  time.timeZone = "Europe/Zagreb";
+  console.keyMap = "croat";
+
   users.groups.jobMarketplace = {};
   users.users = {
     jobMarketplace = {
