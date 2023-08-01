@@ -25,7 +25,7 @@
     };
   };
 
-  environment = 
+  environment = {
     variables.HISTSIZE = "10000";
     shellAliases.ssh = "TERM=xterm ssh";
     interactiveShellInit = "set -o vi";
