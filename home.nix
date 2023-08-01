@@ -110,7 +110,8 @@
   # $ nix search wget
   environment = {
     loginShellInit = "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && XINITRC=${./xinitrc} XRESOURCES=${./Xresources} exec startx";
-    variables = { EDITOR = "vim"; TERM = "xterm"; HISTSIZE = "10000"; BROWSER = "qutebrowser"; };
+    variables = { EDITOR = "vim"; HISTSIZE = "10000"; BROWSER = "qutebrowser"; };
+    shellAliases = { ssh = "TERM=xterm ssh"; };
     interactiveShellInit = ''
       set -o vi
     '';
