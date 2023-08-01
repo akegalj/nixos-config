@@ -6,20 +6,14 @@
       ./vim.nix
     ];
 
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 20;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
   time.timeZone = "Europe/Zagreb";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -43,6 +37,8 @@
 
   services.xserver = {
     enable = true;
+    layout = "hr";
+    xkbVariant = "";
     displayManager.startx.enable = true;
     windowManager = {
       xmonad = {
@@ -56,16 +52,10 @@
     };
   };
 
-  services.xserver = {
-    layout = "hr";
-    xkbVariant = "";
-  };
-
   console.keyMap = "croat";
 
   sound.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.akegalj = {
     isNormalUser = true;
     description = "akegalj";
@@ -78,29 +68,24 @@
       rxvt-unicode
       zathura
       feh
-    ];
-  };
-
-  nixpkgs.config.allowUnfree = true;
-
-  # $ nix search wget
-  environment = {
-    loginShellInit = "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && XINITRC=${./xinitrc} XRESOURCES=${./Xresources} exec startx";
-    variables = { HISTSIZE = "10000"; BROWSER = "qutebrowser"; };
-    shellAliases = { ssh = "TERM=xterm ssh"; };
-    interactiveShellInit = ''
-      set -o vi
-    '';
-    systemPackages = with pkgs; [
+      texlive.combined.scheme-full
       wget
       acpi
       lm_sensors
       (pass.withExtensions (exts: [ exts.pass-otp ]))
       vanilla-dmz
-      texlive.combined.scheme-full
       irssi
-      ormolu
     ];
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
+  environment = {
+    loginShellInit = "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && XINITRC=${./xinitrc} XRESOURCES=${./Xresources} exec startx";
+    variables = { HISTSIZE = "10000"; BROWSER = "qutebrowser"; };
+    shellAliases.ssh = "TERM=xterm ssh";
+    interactiveShellInit = "set -o vi";
+    systemPackages = [];
   };
 
   programs = {
@@ -129,14 +114,6 @@
     experimental-features = [ "nix-command" "flakes" ];
     allow-import-from-derivation = ["true"];
   };
-
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   system.stateVersion = "23.05";
 }
