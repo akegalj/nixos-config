@@ -14,12 +14,11 @@
 
   time.timeZone = "Europe/Zagreb";
   console.keyMap = "croat";
-  i18n.extraLocaleSettings.LC_TIME = "hr_HR.UTF-8";
-
-  fonts = {
-    enableDefaultFonts = true;
-    fonts = [ pkgs.ubuntu_font_family ];
-  };
+  i18n.defaultLocale = "hr_HR.UTF-8";
+  i18n.extraLocaleSettings.LC_TIME = "en_US.UTF-8";
+  fonts.fonts = [ pkgs.ubuntu_font_family ];
+  sound.enable = true;
+  nixpkgs.config.allowUnfree = true;
 
   services.xserver = {
     enable = true;
@@ -37,8 +36,6 @@
       };
     };
   };
-
-  sound.enable = true;
 
   users.users.akegalj = {
     isNormalUser = true;
@@ -61,8 +58,6 @@
       irssi
     ];
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   environment = {
     loginShellInit = "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && XINITRC=${./xinitrc} XRESOURCES=${./Xresources} exec startx";
