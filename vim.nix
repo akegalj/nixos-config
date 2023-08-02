@@ -1,8 +1,7 @@
 { config, pkgs, ... }:
 let vim = if config.services.xserver.enable then pkgs.vim-full else pkgs.vim;
     myvim = vim.customize {
-      vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
-        start = [ 
+      vimrcConfig.packages.myplugins.start = with pkgs.vimPlugins; [ 
           vim-nix
           vim-lastplace
           vim-ormolu
@@ -12,13 +11,12 @@ let vim = if config.services.xserver.enable then pkgs.vim-full else pkgs.vim;
           zenburn
           vim-colors-solarized
           ctrlp
-        ];
-        opt = [];
-      };
+      ];
       vimrcConfig.customRC = builtins.readFile ./vimrc;
     };
 in
 {
   environment.variables = { EDITOR = "vim"; };
-  environment.systemPackages = [ myvim pkgs.ormolu ];
+  environment.systemPackages = [ myvim ];
+  users.users.akegalj.packages = [ pkgs.ormolu ];
 }

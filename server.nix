@@ -43,15 +43,12 @@
   programs = {
     git = {
       enable = true;
-      config = {
-        user = {
-          email = "akegalj@gmail.com";
-          name = "Ante Kegalj";
-        };
-        init = {
-          defaultBranch = "main";
-        };
+      config.user = {
+        email = "akegalj@gmail.com";
+        name = "Ante Kegalj";
       };
+      config.init.defaultBranch = "main";
+      config.safe.directory = "~/projects/nixos-config";
     };
     htop.enable = true;
   };

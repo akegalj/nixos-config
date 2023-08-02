@@ -23,7 +23,6 @@
   services.xserver = {
     enable = true;
     layout = "hr";
-    xkbVariant = "";
     displayManager.startx.enable = true;
     windowManager = {
       xmonad = {
@@ -68,21 +67,16 @@
   };
 
   programs = {
-    gnupg.agent = {
-      enable = true;
-    # enableSSHSupport = true;
-    };
+    gnupg.agent.enable = true;
+    # gnupg.agent.enableSSHSupport = true;
     git = {
       enable = true;
-      config = {
-        user = {
-          email = "akegalj@gmail.com";
-          name = "Ante Kegalj";
-        };
-        init = {
-          defaultBranch = "main";
-        };
+      config.user = {
+        email = "akegalj@gmail.com";
+        name = "Ante Kegalj";
       };
+      config.init.defaultBranch = "main";
+      config.safe.directory = "~/projects/nixos-config";
     };
     slock.enable = true;
     htop.enable = true;
