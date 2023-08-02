@@ -37,7 +37,7 @@
   users.users.akegalj = {
     isNormalUser = true;
     description = "akegalj";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" ];
     packages = with pkgs; [
       firefox
       qutebrowser
@@ -78,6 +78,7 @@
     };
     slock.enable = true;
     htop.enable = true;
+    light.enable = true;
   };
 
   nix.settings = {
