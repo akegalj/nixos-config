@@ -14,8 +14,6 @@
 
   time.timeZone = "Europe/Zagreb";
   console.keyMap = "croat";
-  i18n.defaultLocale = "hr_HR.UTF-8";
-  i18n.extraLocaleSettings.LC_TIME = "en_US.UTF-8";
   fonts.fonts = [ pkgs.ubuntu_font_family ];
   sound.enable = true;
   nixpkgs.config.allowUnfree = true;
