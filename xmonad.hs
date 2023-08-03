@@ -1,3 +1,5 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -v --run "ghci repl" -p "haskellPackages.ghcWithPackages (p: with p; [ xmonad xmonad-contrib data-default ])
 import Data.Char (toLower)
 import Data.Default (def)
 import System.Directory
@@ -22,8 +24,8 @@ main =
                           ("<XF86AudioMute>", spawn "amixer set 'Master' toggle"),
                           ("<XF86AudioLowerVolume>", spawn "amixer set 'Master' 5%-"),
                           ("<XF86AudioRaiseVolume>", spawn "amixer set 'Master' 5%+"),
-                          ("<XF86MonBrightnessUp>", spawn "light -A 5"),
-                          ("<XF86MonBrightnessDown>", spawn "light -U 5"),
+                          ("<XF86MonBrightnessUp>", spawn "light -A 2"),
+                          ("<XF86MonBrightnessDown>", spawn "light -U 2"),
                           ("M-y n", promptWSGroupAdd def "Name this group: "),
                           ("M-y g", promptWSGroupView def "Go to group: "),
                           ("M-y d", promptWSGroupForget def "Forget group: ")
@@ -51,6 +53,7 @@ main =
             let path = returnPath home <$> title
             isDirectory <- path >>= io . doesDirectoryExist
             spawnSpecialTerminalIf isDirectory $ path >>= io . spawn . terminalCd
+            io $ spawn $ "echo " ++ show home ++ " " ++ show isDirectory ++ ">> ~/bla"
         Nothing -> spawn terminal
     terminal = terminalName ++ terminalOptions
     terminalCd dir = terminal ++ " -cd '" ++ dir ++ "'"

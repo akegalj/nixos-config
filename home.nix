@@ -66,6 +66,7 @@
 
   programs = {
     gnupg.agent.enable = true;
+    # https://opensource.com/article/19/4/gpg-subkeys-ssh
     # gnupg.agent.enableSSHSupport = true;
     git = {
       enable = true;
@@ -81,6 +82,8 @@
     light.enable = true;
   };
 
+  nix.binaryCaches = [ "https://nixcache.reflex-frp.org" ];
+  nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
   nix.settings = {
     trusted-users = ["root" "akegalj"];
     experimental-features = [ "nix-command" "flakes" ];
