@@ -1,7 +1,8 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -v --run "ghci repl" -p "haskellPackages.ghcWithPackages (p: with p; [ xmonad xmonad-contrib data-default ])
-import Data.Char (toLower)
+import Data.Char (isSpace, toLower)
 import Data.Default (def)
+import Data.List (dropWhile, dropWhileEnd)
 import System.Directory
   ( doesDirectoryExist,
     getHomeDirectory,
@@ -13,6 +14,16 @@ import XMonad.Layout.NoBorders
 import XMonad.StackSet
 import XMonad.Util.EZConfig
 
+returnPath :: String -> String -> String
+returnPath home = replaceTilda . trim . safeTail . takeFrom ':'
+  where
+    replaceTilda ('~' : xs) = home ++ xs
+    replaceTilda x = x
+    safeTail xs = if null xs then xs else tail xs
+    takeFrom c = dropWhile (not . (c ==))
+    trim = dropWhile isSpace . dropWhileEnd isSpace
+
+main :: IO ()
 main =
   xmonad . ewmhFullscreen . ewmh $
     def
@@ -31,18 +42,11 @@ main =
                           ("M-y d", promptWSGroupForget def "Forget group: ")
                         ]
   where
-    returnPath home = replaceTilda . safeTail . takeFrom ':'
-      where
-        replaceTilda [] = []
-        replaceTilda p@(x : xs)
-          | x == '~' = home ++ xs
-          | otherwise = p
-    safeTail xs = if null xs then xs else tail xs
-    takeFrom c = dropWhile (not . (c ==))
     lowerCaseClassName = map toLower <$> className
     spawnSpecialTerminalIf b f
       | b = f
       | otherwise = io $ spawn terminal
+
     spawnWithMaybeFocusedTerminal = do
       mw <- withWindowSet $ return . peek
       case mw of
@@ -53,7 +57,8 @@ main =
             let path = returnPath home <$> title
             isDirectory <- path >>= io . doesDirectoryExist
             spawnSpecialTerminalIf isDirectory $ path >>= io . spawn . terminalCd
-            io $ spawn $ "echo " ++ show home ++ " " ++ show isDirectory ++ ">> ~/bla"
+        -- NOTE: enable for logs
+        -- ((,) <$> path <*> title) >>= \(p, t) -> io . spawn $ "echo " ++ show home ++ "_" ++ show isDirectory ++ "_" ++ p ++ "_" ++ t ++ " >> /home/akegalj/xmonad.logs"
         Nothing -> spawn terminal
     terminal = terminalName ++ terminalOptions
     terminalCd dir = terminal ++ " -cd '" ++ dir ++ "'"
