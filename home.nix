@@ -8,7 +8,6 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 20;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.networkmanager.enable = true;
 
@@ -18,6 +17,12 @@
   sound.enable = true;
   nixpkgs.config.allowUnfree = true;
 
+  services.postgresql.enable = true;
+  services.postgresql.package = pkgs.postgresql_15;
+  services.postgresql.initialScript = pkgs.writeText "psql-init" ''
+    CREATE USER akegalj WITH SUPERUSER PASSWORD 'website';
+    CREATE DATABASE website WITH OWNER akegalj;
+  '';
   services.xserver = {
     enable = true;
     layout = "hr";

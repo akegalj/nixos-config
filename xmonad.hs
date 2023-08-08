@@ -57,6 +57,7 @@ main =
             let path = returnPath home <$> title
             isDirectory <- path >>= io . doesDirectoryExist
             spawnSpecialTerminalIf isDirectory $ path >>= io . spawn . terminalCd
+
         -- NOTE: enable for logs
         -- ((,) <$> path <*> title) >>= \(p, t) -> io . spawn $ "echo " ++ show home ++ "_" ++ show isDirectory ++ "_" ++ p ++ "_" ++ t ++ " >> /home/akegalj/xmonad.logs"
         Nothing -> spawn terminal
