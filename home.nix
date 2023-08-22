@@ -70,6 +70,7 @@
       PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]$ ";
     };
     shellAliases.ssh = "TERM=xterm ssh";
+    shellAliases.zulip = "GDK_BACKEND=x11 zulip";
     interactiveShellInit = "set -o vi";
     systemPackages = [];
   };
