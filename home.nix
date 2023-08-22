@@ -63,7 +63,12 @@
 
   environment = {
     loginShellInit = "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && XINITRC=${./xinitrc} XRESOURCES=${./Xresources} exec startx";
-    variables = { HISTSIZE = "10000"; BROWSER = "qutebrowser"; };
+    variables = {
+      HISTSIZE = "10000";
+      HISTCONTROL = "ignoredups:ignorespace";
+      BROWSER = "qutebrowser";
+      PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]$ ";
+    };
     shellAliases.ssh = "TERM=xterm ssh";
     interactiveShellInit = "set -o vi";
     systemPackages = [];
