@@ -1,7 +1,17 @@
 { config, pkgs, ... }:
-let vim = if config.services.xserver.enable then pkgs.vim-full else pkgs.vim;
+let
+    badwolf = pkgs.vimUtils.buildVimPlugin {
+      name = "badwolf";
+      src = pkgs.fetchFromGitHub {
+        owner = "sjl";
+        repo = "badwolf";
+        rev = "682b521";
+        sha256 = "Dl4zaGkeglURy7JQtThpaY/UrNIoxtkndjF/HJw7yAg=";
+      };
+    };
+    vim = if config.services.xserver.enable then pkgs.vim-full else pkgs.vim;
     myvim = vim.customize {
-      vimrcConfig.packages.myplugins.start = with pkgs.vimPlugins; [ 
+      vimrcConfig.packages.myplugins.start = with pkgs.vimPlugins; [
           vim-nix
           vim-lastplace
           vim-ormolu
@@ -9,6 +19,7 @@ let vim = if config.services.xserver.enable then pkgs.vim-full else pkgs.vim;
           editorconfig-vim
           vim-textobj-user
           zenburn
+          badwolf
           vim-colors-solarized
           ctrlp
       ];

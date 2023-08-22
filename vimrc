@@ -40,6 +40,13 @@ nnoremap <C-w> <C-w>w
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 
 set mouse=a
+set cursorline
+set wildmenu
+set incsearch
+set hlsearch
+nnoremap <leader><space> :nohlsearch<CR>
+
+colorscheme badwolf
 
 " make line navigation ignore line wrap
 nmap j gj
@@ -60,3 +67,13 @@ set nofixeol
 set noeol
 
 let g:ormolu_options = ["--no-cabal"]
+
+" remove trailing whitespaces
+fun! <SID>StripTrailingWhitespaces()
+  let l = line(".")
+  let c = col(".")
+  %s/\s\+$//e
+  call cursor(l, c)
+endfun
+
+autocmd FileType c,python,haskell,nix autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
