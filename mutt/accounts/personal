@@ -1,0 +1,14 @@
+set imap_user   = akegalj@gmail.com
+set my_pass     = neomutt-akegalj-gmail
+
+source "bash -c 'echo -n set imap_pass=';pass $my_pass|"
+# set smtp_pass   = $imap_pass
+# set from        = $imap_user
+set smtp_user   = akegalj@gmail.com # akegalj@posteo.net
+set from        = akegalj@gmail.com # akegalj@posteo.me
+
+# imap.google.com specific configuration
+source ~/projects/nixos-config/mutt/gmail
+
+# Generic configuration
+source ~/projects/nixos-config/mutt/muttrc

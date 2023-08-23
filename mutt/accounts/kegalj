@@ -1,0 +1,12 @@
+set imap_user   = ante@kegalj.com
+set my_pass     = neomutt-ante-kegalj-com
+
+source "bash -c 'echo -n set imap_pass=';pass $my_pass|"
+set smtp_pass   = $imap_pass
+set from        = $imap_user
+
+# imap.kegalj.com specific configuration
+source ~/projects/nixos-config/mutt/kegalj
+
+# Generic configuration
+source ~/projects/nixos-config/mutt/muttrc

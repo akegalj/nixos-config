@@ -1,0 +1,17 @@
+# Copy sent message to a $record folder
+set copy=yes
+
+set folder      = imaps://mail.kegalj.com/
+set postponed = "+Drafts"
+set record = "+Sent"
+
+mailboxes = +INBOX
+mailboxes = "+Sent"
+mailboxes = "+Drafts"
+# TODO: test if Junk really works?
+mailboxes = "+Junk"
+# TODO: possibly remove trash folder?
+mailboxes = "+Trash"
+# TODO: add other contex related mailboxes and automatic move/copy hooks
+
+set spoolfile   = +INBOX

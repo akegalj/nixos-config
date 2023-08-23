@@ -1,0 +1,4 @@
+set imap_user   = ante.kegalj@iohk.io
+set my_pass     = neomutt-iohk-gmail
+
+source ~/projects/nixos-config/mutt/muttrc

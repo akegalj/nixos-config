@@ -1,0 +1,14 @@
+# Google mail server copies by default sent messages
+set copy=no
+
+set folder      = imaps://imap.gmail.com/
+set postponed = +[Gmail]/Drafts
+
+mailboxes = +INBOX
+mailboxes = "+[Gmail]/Sent Mail"
+mailboxes = +[Gmail]/Drafts
+mailboxes = +[Gmail]/Starred
+mailboxes = +[Gmail]/Important
+mailboxes = +[Gmail]/Spam
+
+set spoolfile   = +INBOX

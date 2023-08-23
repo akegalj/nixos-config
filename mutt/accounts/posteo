@@ -1,0 +1,13 @@
+set imap_user   = akegalj@posteo.net
+set my_pass     = posteo
+
+source "bash -c 'echo -n set imap_pass=';pass $my_pass|"
+set smtp_user   = $imap_user
+# set smtp_pass   = $imap_pass
+set from        = akegalj@posteo.me
+
+# imap.google.com specific configuration
+source ~/projects/nixos-config/mutt/posteo
+
+# Generic configuration
+source ~/projects/nixos-config/mutt/muttrc

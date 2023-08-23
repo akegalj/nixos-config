@@ -17,12 +17,12 @@
   sound.enable = true;
   nixpkgs.config.allowUnfree = true;
 
-  services.postgresql.enable = true;
-  services.postgresql.package = pkgs.postgresql_15;
-  services.postgresql.initialScript = pkgs.writeText "psql-init" ''
-    CREATE USER akegalj WITH SUPERUSER PASSWORD 'website';
-    CREATE DATABASE website WITH OWNER akegalj;
-  '';
+  # services.postgresql.enable = true;
+  # services.postgresql.package = pkgs.postgresql_15;
+  # services.postgresql.initialScript = pkgs.writeText "psql-init" ''
+  #   CREATE USER akegalj WITH SUPERUSER PASSWORD 'website';
+  #   CREATE DATABASE website WITH OWNER akegalj;
+  # '';
   services.xserver = {
     enable = true;
     layout = "hr";
@@ -58,11 +58,23 @@
       (pass.withExtensions (exts: [ exts.pass-otp ]))
       vanilla-dmz
       irssi
+      urlview
+      msmtp
+      w3m
+      neomutt
+      mpv
     ];
   };
 
   environment = {
-    loginShellInit = "[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && XINITRC=${./xinitrc} XRESOURCES=${./Xresources} exec startx";
+    etc."msmtprc".source = ./msmtprc;
+    loginShellInit = let home = "/home/akegalj"; in ''
+      [[ ! -f ${home}/.haskeline ]] && echo "editMode: Vi" > ${home}/.haskeline
+      PASSWORD_STORE_DIR=${home}/.password-store
+      [[ ! -f ${home}/.gnupg/sshcontrol ]] && echo "9D9341EBB28348D3718E0F1BC60C0924F77A10D2" > ${home}/.gnupg/sshcontrol
+      [[ ! -d $PASSWORD_STORE_DIR ]] && pass init akegalj && pass git init && pass git remote add origin git@github.com:akegalj/pass.git && pass git config pull.rebase true && pass git pull -r --set-upstream origin main
+      [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && XINITRC=${./xinitrc} XRESOURCES=${./Xresources} exec startx
+    '';
     variables = {
       HISTSIZE = "10000";
       HISTCONTROL = "ignoredups:ignorespace";
@@ -70,13 +82,13 @@
     };
     shellAliases.ssh = "TERM=xterm ssh";
     shellAliases.zulip = "GDK_BACKEND=x11 zulip";
+    shellAliases.ghci = "ghci -v0 -ignore-dot-ghci -ghci-script ${./ghci}";
     interactiveShellInit = "set -o vi";
     systemPackages = [];
   };
 
   programs = {
     gnupg.agent.enable = true;
-    # https://opensource.com/article/19/4/gpg-subkeys-ssh
     # gnupg.agent.enableSSHSupport = true;
     git = {
       enable = true;

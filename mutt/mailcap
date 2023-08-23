@@ -1,0 +1,6 @@
+text/html; w3m -O UTF8 -T text/html; copiousoutput;
+xxxtext/xxxplain; w3m -O UTF8 -T text/html; copiousoutput;
+
+image/*; feh - &
+audio/*; mpv - &
+video/*; mpv - &

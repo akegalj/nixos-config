@@ -1,0 +1,13 @@
+set copy=yes
+
+set folder      = imaps://posteo.de:993/
+set postponed = +Drafts
+set trash = +Trash
+set record = +Sent
+
+mailboxes = +INBOX
+mailboxes = +Sent
+mailboxes = +Trash
+mailboxes = +Drafts
+
+set spoolfile   = +INBOX
