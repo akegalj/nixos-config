@@ -70,6 +70,7 @@
     etc."msmtprc".source = ./msmtprc;
     loginShellInit = let home = "/home/akegalj"; in ''
       [[ ! -f ${home}/.haskeline ]] && echo "editMode: Vi" > ${home}/.haskeline
+      [[ ! -f ${home}/.aliases ]] && touch ${home}/.aliases
       PASSWORD_STORE_DIR=${home}/.password-store
       [[ ! -f ${home}/.gnupg/sshcontrol ]] && echo "9D9341EBB28348D3718E0F1BC60C0924F77A10D2" > ${home}/.gnupg/sshcontrol
       [[ ! -d $PASSWORD_STORE_DIR ]] && pass init akegalj && pass git init && pass git remote add origin git@github.com:akegalj/pass.git && pass git config pull.rebase true && pass git pull -r --set-upstream origin main
