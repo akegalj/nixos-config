@@ -55,7 +55,7 @@ nmap k gk
 let g:ctrlp_switch_buffer = 'et'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 let g:ctrlp_cmd = 'CtrlPMixed'
-set wildignore+=*.pyc,*.pdf,*/env/*,*/js_build/*,*/build/*,*/node_modules/*,*/output/*,*/bower_components/* " ctrlp won't index pyc
+set wildignore+=*.pyc,*.pdf,*/env/*,*/js_build/*,*/build/*,*/node_modules/*,*/output/*,*/bower_components/*,*state-node-preview/*,*state-node-mainnet/* " ctrlp won't index pyc
 " set directory=$HOME/.vim/swapfiles//
 
 au BufRead /tmp/mutt-* set tw=72
