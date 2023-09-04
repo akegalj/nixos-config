@@ -63,6 +63,7 @@
       w3m
       neomutt
       mpv
+      scrot
     ];
   };
 
@@ -88,6 +89,7 @@
     shellAliases.ghci = "ghci -v0 -ignore-dot-ghci -ghci-script ${./ghci}";
     shellAliases.uncomp = "pdftk '$(echo $FILE)' output uncompressed.pdf uncompress";
     shellAliases.comp = "FILE_E=`echo $FILE | sed 's/\.pdf//'` pdftk uncompressed.pdf output '$(echo $FILE_E)_fixed.pdf' compress";
+    shellAliases.scrot = "scrot -s ~/pictures/$(date '+%Y%m%d-%H%M%S').png";
     interactiveShellInit = "set -o vi";
     systemPackages = [];
   };
