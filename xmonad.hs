@@ -35,8 +35,8 @@ main =
                           ("<XF86AudioMute>", spawn "amixer set 'Master' toggle; amixer set 'Headphone' toggle"),
                           ("<XF86AudioLowerVolume>", spawn "amixer set 'Master' 5%-; amixer set 'Headphone' 5%-"),
                           ("<XF86AudioRaiseVolume>", spawn "amixer set 'Master' 5%+; amixer set 'Headphone' 5%+"),
-                          ("<XF86MonBrightnessUp>", spawn "light -A 2"),
-                          ("<XF86MonBrightnessDown>", spawn "light -U 2"),
+                          ("<XF86MonBrightnessUp>", spawn "which light && light -A 2"),
+                          ("<XF86MonBrightnessDown>", spawn "which light && light -U 2"),
                           ("M-y n", promptWSGroupAdd def "Name this group: "),
                           ("M-y g", promptWSGroupView def "Go to group: "),
                           ("M-y d", promptWSGroupForget def "Forget group: ")
