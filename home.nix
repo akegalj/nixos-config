@@ -17,12 +17,12 @@
   sound.enable = true;
   nixpkgs.config.allowUnfree = true;
 
-  # services.postgresql.enable = true;
-  # services.postgresql.package = pkgs.postgresql_15;
-  # services.postgresql.initialScript = pkgs.writeText "psql-init" ''
-  #   CREATE USER akegalj WITH SUPERUSER PASSWORD 'website';
-  #   CREATE DATABASE website WITH OWNER akegalj;
-  # '';
+  services.postgresql.enable = true;
+  services.postgresql.package = pkgs.postgresql_15;
+  services.postgresql.initialScript = pkgs.writeText "psql-init" ''
+    CREATE USER akegalj WITH SUPERUSER PASSWORD 'website';
+    CREATE DATABASE website WITH OWNER akegalj;
+  '';
   services.xserver = {
     enable = true;
     layout = "hr";
