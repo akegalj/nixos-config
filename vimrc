@@ -60,7 +60,7 @@ set wildignore+=*.pyc,*.pdf,*/env/*,*/js_build/*,*/build/*,*/node_modules/*,*/ou
 
 au BufRead /tmp/mutt-* set tw=72
 
-vnoremap <C-c> "*y
+vnoremap <C-c> "+y
 noremap <S-Insert> "*p
 
 set nofixeol
