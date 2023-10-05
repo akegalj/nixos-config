@@ -42,7 +42,7 @@
   users.users.akegalj = {
     isNormalUser = true;
     description = "akegalj";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "adbusers" ];
     packages = with pkgs; [
       firefox
       qutebrowser
@@ -110,6 +110,7 @@
     slock.enable = true;
     htop.enable = true;
     light.enable = true;
+    adb.enable = true;
   };
 
   nix.binaryCaches = [ "https://nixcache.reflex-frp.org" ];
