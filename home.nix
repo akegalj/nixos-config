@@ -46,8 +46,8 @@
     packages = with pkgs; [
       firefox
       qutebrowser
-      vimb
-      zulip
+      # vimb
+      # zulip
       rxvt-unicode
       zathura
       feh
@@ -86,7 +86,7 @@
       BROWSER = "qutebrowser";
     };
     shellAliases.ssh = "TERM=xterm ssh";
-    shellAliases.zulip = "GDK_BACKEND=x11 zulip";
+    # shellAliases.zulip = "GDK_BACKEND=x11 zulip";
     shellAliases.ghci = "ghci -v0 -ignore-dot-ghci -ghci-script ${./ghci}";
     shellAliases.uncomp = "pdftk '$(echo $FILE)' output uncompressed.pdf uncompress";
     shellAliases.comp = "FILE_E=`echo $FILE | sed 's/\.pdf//'` pdftk uncompressed.pdf output '$(echo $FILE_E)_fixed.pdf' compress";
