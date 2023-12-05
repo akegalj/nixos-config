@@ -14,7 +14,7 @@ let
       vimrcConfig.packages.myplugins.start = with pkgs.vimPlugins; [
           vim-nix
           vim-lastplace
-          vim-ormolu
+          # vim-ormolu
           vimwiki
           editorconfig-vim
           vim-textobj-user
