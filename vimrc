@@ -77,3 +77,5 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 
 autocmd FileType c,python,haskell,nix autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+
+let g:hamlet_highlight_trailing_space = 0
