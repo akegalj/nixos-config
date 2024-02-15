@@ -1,9 +1,12 @@
 set imap_user   = akegalj@gmail.com
 set my_pass     = neomutt-akegalj-gmail
 
-source "bash -c 'echo -n set imap_pass=';pass $my_pass|"
+# source "bash -c 'echo -n set imap_pass=';pass $my_pass|"
 # set smtp_pass   = $imap_pass
 # set from        = $imap_user
+
+setenv MUTT_IMAP "${my_pass}"
+set imap_pass=`pass $MUTT_IMAP`
 set smtp_user   = akegalj@gmail.com # akegalj@posteo.net
 set from        = akegalj@gmail.com # akegalj@posteo.me
 

@@ -1,7 +1,9 @@
 set imap_user   = akegalj@posteo.net
 set my_pass     = posteo
 
-source "bash -c 'echo -n set imap_pass=';pass $my_pass|"
+# source "bash -c 'echo -n set imap_pass=';pass $my_pass|"
+setenv MUTT_IMAP "${my_pass}"
+set imap_pass=`pass $MUTT_IMAP`
 set smtp_user   = $imap_user
 # set smtp_pass   = $imap_pass
 set from        = akegalj@posteo.me
