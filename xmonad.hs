@@ -2,7 +2,7 @@
 #!nix-shell -v --run "ghci repl" -p "haskellPackages.ghcWithPackages (p: with p; [ xmonad xmonad-contrib data-default ])
 import Data.Char (isSpace, toLower)
 import Data.Default (def)
-import Data.List (dropWhile, dropWhileEnd)
+import Data.List (dropWhile, dropWhileEnd, isSuffixOf)
 import System.Directory
   ( doesDirectoryExist,
     getHomeDirectory,
@@ -14,8 +14,11 @@ import XMonad.Layout.NoBorders
 import XMonad.StackSet
 import XMonad.Util.EZConfig
 
+-- TODO: cleanup
 returnPath :: String -> String -> String
-returnPath home = replaceTilda . trim . safeTail . takeFrom ':'
+returnPath home title
+  | isSuffixOf ") - VIM" title = replaceTilda . trim . safeTail . takeWhile (/=')') $ takeFrom '(' title -- vim puts different tag
+  | otherwise = replaceTilda . trim . safeTail $ takeFrom ':' title
   where
     replaceTilda ('~' : xs) = home ++ xs
     replaceTilda x = x
