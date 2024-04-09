@@ -52,6 +52,7 @@
       zathura
       feh
       texlive.combined.scheme-full
+      xsel
       wget
       acpi
       lm_sensors
