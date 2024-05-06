@@ -38,11 +38,13 @@
       };
     };
   };
+  hardware.pulseaudio.enable = true;
 
   users.users.akegalj = {
     isNormalUser = true;
     description = "akegalj";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    # NOTE: dialout is for arduino-ide
+    extraGroups = [ "networkmanager" "wheel" "video" "dialout" "audio" ];
     packages = with pkgs; [
       firefox
       qutebrowser
@@ -89,7 +91,9 @@
     shellAliases.ssh = "TERM=xterm ssh";
     # shellAliases.zulip = "GDK_BACKEND=x11 zulip";
     shellAliases.ghci = "ghci -v0 -ignore-dot-ghci -ghci-script ${./ghci}";
+    # use `qpdf --decrypt bla.pdf uncompressed.pdf` as an alternative
     shellAliases.uncomp = "pdftk '$(echo $FILE)' output uncompressed.pdf uncompress";
+    # use ghostscript to fix any broken pdf `gs -o repaired.pdf -sDEVICE=pdfwrite -dPDFSETTINGS/prepress uncompressed.pdf`
     shellAliases.comp = "FILE_E=`echo $FILE | sed 's/\.pdf//'` pdftk uncompressed.pdf output '$(echo $FILE_E)_fixed.pdf' compress";
     shellAliases.scrot = "scrot -s ~/pictures/$(date '+%Y%m%d-%H%M%S').png";
     interactiveShellInit = "set -o vi";
@@ -113,6 +117,7 @@
     light.enable = true;
   };
 
+
   nix.binaryCaches = [ "https://nixcache.reflex-frp.org" ];
   nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
   nix.settings = {
@@ -120,6 +125,8 @@
     experimental-features = [ "nix-command" "flakes" ];
     allow-import-from-derivation = ["true"];
   };
+
+  hardware.ledger.enable = true;
 
   system.stateVersion = "23.05";
 }
