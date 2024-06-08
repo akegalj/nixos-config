@@ -61,7 +61,7 @@
       (pass.withExtensions (exts: [ exts.pass-otp ]))
       vanilla-dmz
       irssi
-      urlview
+      urlscan
       msmtp
       w3m
       neomutt

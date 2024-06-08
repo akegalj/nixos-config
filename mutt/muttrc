@@ -50,7 +50,8 @@ bind index D delete-message
 bind index U undelete-message
 # bind generic,pager \Cf search
 bind index,pager \Cr group-reply
-# macro index,pager \Cb |urlview\n
+macro index,pager \cb "<pipe-message> urlscan<Enter>" "call urlscan to
+# macro attach,compose \cb "<pipe-entry> urlscan<Enter>" "call urlscan to
 
 
 set sleep_time = 0
@@ -118,7 +119,6 @@ set pgp_use_gpg_agent
 source ~/projects/nixos-config/mutt/gpgrc
 
 alias me $realname <$from>
-# TODO: delete either urlscan or urlview - seems like urlview is sufficient
 
 # Check Arch Wiki Mutt security concern
 # disables mutt line editing prompt
