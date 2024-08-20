@@ -46,6 +46,7 @@
     # NOTE: dialout is for arduino-ide
     extraGroups = [ "networkmanager" "wheel" "video" "dialout" "audio" ];
     packages = with pkgs; [
+      devenv
       firefox
       qutebrowser
       # vimb
@@ -100,6 +101,7 @@
     systemPackages = [];
   };
 
+
   programs = {
     gnupg.agent.enable = true;
     # gnupg.agent.enableSSHSupport = true;
@@ -115,6 +117,14 @@
     slock.enable = true;
     htop.enable = true;
     light.enable = true;
+    # used for livtours frontend dev
+    # for alternative see https://nix.dev/guides/faq#how-to-run-non-nix-executables
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        gmp
+      ];
+    };
   };
 
 
