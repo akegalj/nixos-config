@@ -68,6 +68,7 @@
       neomutt
       mpv
       scrot
+      graphite-cli
     ];
   };
 
