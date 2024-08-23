@@ -10,6 +10,9 @@
   boot.loader.systemd-boot.configurationLimit = 20;
 
   networking.networkmanager.enable = true;
+  networking.hosts = {
+    "127.0.0.1" = ["dev-agents.livtours.com"];
+  };
 
   time.timeZone = "Europe/Zagreb";
   console.keyMap = "croat";
