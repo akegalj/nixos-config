@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
-
+let
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+in
 {
   imports =
     [
@@ -49,7 +51,7 @@
     # NOTE: dialout is for arduino-ide
     extraGroups = [ "networkmanager" "wheel" "video" "dialout" "audio" ];
     packages = with pkgs; [
-      devenv
+      unstable.devenv
       firefox
       qutebrowser
       # vimb
@@ -71,7 +73,10 @@
       neomutt
       mpv
       scrot
-      graphite-cli
+      unstable.graphite-cli
+#      (ffmpeg.override {
+#        withXcb = true;
+#      })
     ];
   };
 
