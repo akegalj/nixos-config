@@ -137,6 +137,15 @@ in
     direnv.enable = true;
   };
 
+  # set default browser to qutebrowser
+  xdg.mime.defaultApplications = {
+    "text/html" = "org.qutebrowser.qutebrowser.desktop";
+    "x-scheme-handler/http" = "org.qutebrowser.qutebrowser.desktop";
+    "x-scheme-handler/https" = "org.qutebrowser.qutebrowser.desktop";
+    "x-scheme-handler/about" = "org.qutebrowser.qutebrowser.desktop";
+    "x-scheme-handler/unknown" = "org.qutebrowser.qutebrowser.desktop";
+  };
+  environment.sessionVariables.DEFAULT_BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
 
   nix.binaryCaches = [ "https://nixcache.reflex-frp.org" ];
   nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
