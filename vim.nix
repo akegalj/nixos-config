@@ -18,12 +18,22 @@ let
         sha256 = "sdCXJOvB+vJE0ir+qsT/u1cHNxrksMnqeQi4D/Vg6UA=";
       };
     };
+    vim-fourmolu = pkgs.vimUtils.buildVimPlugin {
+      name = "vim-fourmolu";
+      src = pkgs.fetchFromGitHub {
+        owner = "feature-not-a-bug";
+        repo = "vim-fourmolu";
+        rev = "0cf6dde";
+        sha256 = "DgLEzzF1RzO7mgOIoiaXiKAZfu5rX31F4YEinWyGh5g=";
+      };
+    };
+
     vim = if config.services.xserver.enable then pkgs.vim-full else pkgs.vim;
     myvim = vim.customize {
       vimrcConfig.packages.myplugins.start = with pkgs.vimPlugins; [
           vim-nix
           vim-lastplace
-          # vim-ormolu
+          vim-fourmolu
           vim-syntax-shakespeare
           vimwiki
           editorconfig-vim
@@ -39,5 +49,5 @@ in
 {
   environment.variables = { EDITOR = "vim"; };
   environment.systemPackages = [ myvim ];
-  users.users.akegalj.packages = [ pkgs.ormolu ];
+  users.users.akegalj.packages = [ pkgs.haskellPackages.fourmolu ];
 }

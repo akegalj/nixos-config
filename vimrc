@@ -66,8 +66,6 @@ noremap <S-Insert> "*p
 set nofixeol
 set noeol
 
-let g:ormolu_options = ["--no-cabal"]
-
 " remove trailing whitespaces
 fun! <SID>StripTrailingWhitespaces()
   let l = line(".")
