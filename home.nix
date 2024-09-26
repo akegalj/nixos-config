@@ -114,6 +114,8 @@ in
   programs = {
     gnupg.agent.enable = true;
     # gnupg.agent.enableSSHSupport = true;
+    # Use ssh-add to add a key to the agent
+    ssh.startAgent = true;
     git = {
       enable = true;
       config.user = {

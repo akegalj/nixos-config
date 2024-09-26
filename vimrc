@@ -63,6 +63,10 @@ au BufRead /tmp/mutt-* set tw=72
 vnoremap <C-c> "+y
 noremap <S-Insert> "*p
 
+" Jump to definition
+" Alternatively use :tjump bla<tab>
+nmap t <C-]>
+
 set nofixeol
 set noeol
 
