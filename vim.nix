@@ -42,6 +42,7 @@ let
           badwolf
           vim-colors-solarized
           ctrlp
+          purescript-vim
       ];
       vimrcConfig.customRC = builtins.readFile ./vimrc;
     };
