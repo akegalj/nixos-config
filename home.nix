@@ -115,6 +115,7 @@ in
     gnupg.agent.enable = true;
     # gnupg.agent.enableSSHSupport = true;
     # Use ssh-add to add a key to the agent
+    # FIXME: agent is not active yet (more work has to be done here)
     ssh.startAgent = true;
     git = {
       enable = true;
