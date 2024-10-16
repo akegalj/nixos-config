@@ -124,7 +124,8 @@ in
         name = "Ante Kegalj";
       };
       config.init.defaultBranch = "main";
-      config.safe.directory = "~/projects/nixos-config";
+      config.safe.directory = "${./.}";
+      config.core.excludesFile = "${./gitignore}";
     };
     slock.enable = true;
     htop.enable = true;
