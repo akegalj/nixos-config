@@ -125,6 +125,7 @@ in
       config.init.defaultBranch = "main";
       config.safe.directory = "${./.}";
       config.core.excludesFile = "${./gitignore}";
+      config.url."https://".insteadOf = "git://";
     };
     slock.enable = true;
     htop.enable = true;
