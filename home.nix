@@ -151,8 +151,8 @@ in
   };
   environment.sessionVariables.DEFAULT_BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
 
-  nix.binaryCaches = [ "https://nixcache.reflex-frp.org" "https://miso-haskell.cachix.org" ];
-  nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" "miso-haskell.cachix.org-1:6N2DooyFlZOHUfJtAx1Q09H0P5XXYzoxxQYiwn6W1e8="];
+  nix.binaryCaches = [ "https://nixcache.reflex-frp.org" "https://miso-haskell.cachix.org" "https://cache.iog.io"];
+  nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" "miso-haskell.cachix.org-1:6N2DooyFlZOHUfJtAx1Q09H0P5XXYzoxxQYiwn6W1e8=" "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="];
   nix.settings = {
     trusted-users = ["root" "akegalj"];
     experimental-features = [ "nix-command" "flakes" ];
