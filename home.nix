@@ -60,7 +60,7 @@ in
       zathura
       feh
       texlive.combined.scheme-full
-      xsel
+      xclip
       wget
       acpi
       lm_sensors
@@ -105,7 +105,8 @@ in
     shellAliases.uncomp = "pdftk '$(echo $FILE)' output uncompressed.pdf uncompress";
     # use ghostscript to fix any broken pdf `gs -o repaired.pdf -sDEVICE=pdfwrite -dPDFSETTINGS/prepress uncompressed.pdf`
     shellAliases.comp = "FILE_E=`echo $FILE | sed 's/\.pdf//'` pdftk uncompressed.pdf output '$(echo $FILE_E)_fixed.pdf' compress";
-    shellAliases.scrot = "scrot -s ~/pictures/$(date '+%Y%m%d-%H%M%S').png";
+    shellAliases.scrot = "PRINT_SCREEN=~/pictures/$(date '+%Y%m%d-%H%M%S').png; scrot -s $PRINT_SCREEN && cat $PRINT_SCREEN | xclip -selection clipboard -t image/png";
+    shellAliases.xsel = "xclip -selection primary";
     interactiveShellInit = "set -o vi";
     systemPackages = [];
   };
