@@ -42,7 +42,8 @@ main =
                           ("<XF86MonBrightnessDown>", spawn "which light && C=`light -G` && [[ ${C%.*} -gt 2 ]] && light -U 2"),
                           ("M-y n", promptWSGroupAdd def "Name this group: "),
                           ("M-y g", promptWSGroupView def "Go to group: "),
-                          ("M-y d", promptWSGroupForget def "Forget group: ")
+                          ("M-y d", promptWSGroupForget def "Forget group: "),
+                          ("<F12>", spawn "PRINT_SCREEN=~/pictures/$(date '+%Y%m%d-%H%M%S').png; scrot -s $PRINT_SCREEN && cat $PRINT_SCREEN | xclip -selection clipboard -t image/png")
                         ]
   where
     lowerCaseClassName = map toLower <$> className
