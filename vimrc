@@ -78,6 +78,16 @@ fun! <SID>StripTrailingWhitespaces()
   call cursor(l, c)
 endfun
 
-autocmd FileType c,python,haskell,nix autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+" format purescript
+fun! <SID>FormatPureScript()
+  let l = line(".")
+  let c = col(".")
+  silent! %!purs-tidy format
+  call cursor(l, c)
+endfun
+
+autocmd FileType c,python,haskell,nix,purescript autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+autocmd FileType purescript autocmd BufWritePre <buffer> :call <SID>FormatPureScript()
+" autocmd BufWritePost,FileWritePost *.raml silent! !TODO generate haskell/ps etags
 
 let g:hamlet_highlight_trailing_space = 0

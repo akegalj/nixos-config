@@ -50,5 +50,5 @@ in
 {
   environment.variables = { EDITOR = "vim"; };
   environment.systemPackages = [ myvim ];
-  users.users.akegalj.packages = [ pkgs.haskellPackages.fourmolu pkgs.haskellPackages.hasktags ];
+  users.users.akegalj.packages = [ pkgs.haskellPackages.fourmolu pkgs.haskellPackages.hasktags pkgs.nodePackages.purs-tidy ];
 }
