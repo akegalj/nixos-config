@@ -87,7 +87,7 @@ fun! <SID>PureScriptFormat()
     silent! %!purs-tidy format
     if (v:shell_error)
       exe "undo"
-      echoerr "Error formatting the code!"
+      echoerr "Parsing of original input failed"
     endif
   finally
     call cursor(l, c)
