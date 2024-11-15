@@ -79,15 +79,23 @@ fun! <SID>StripTrailingWhitespaces()
 endfun
 
 " format purescript
-fun! <SID>FormatPureScript()
-  let l = line(".")
-  let c = col(".")
-  silent! %!purs-tidy format
-  call cursor(l, c)
+fun! <SID>PureScriptFormat()
+  try
+    let l = line(".")
+    let c = col(".")
+
+    silent! %!purs-tidy format
+    if (v:shell_error)
+      exe "undo"
+      echoerr "Error formatting the code!"
+    endif
+  finally
+    call cursor(l, c)
+  endtry
 endfun
 
 autocmd FileType c,python,haskell,nix autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
-autocmd FileType purescript autocmd BufWritePre <buffer> :call <SID>FormatPureScript()
+autocmd FileType purescript autocmd BufWritePre <buffer> :call <SID>PureScriptFormat()
 " autocmd BufWritePost,FileWritePost *.raml silent! !TODO generate haskell/ps etags
 
 let g:hamlet_highlight_trailing_space = 0
