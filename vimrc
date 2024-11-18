@@ -47,6 +47,14 @@ set hlsearch
 nnoremap <leader><space> :nohlsearch<CR>
 
 colorscheme badwolf
+" NOTE:
+" over summer/light use:
+"   * Xresources.light from https://github.com/solarized/xresources
+"   * colorscheme solarized
+"   * set background=light
+" for puh use:
+"   * colorscheme lightning
+"
 
 " make line navigation ignore line wrap
 nmap j gj
@@ -94,7 +102,7 @@ fun! <SID>PureScriptFormat()
   endtry
 endfun
 
-autocmd FileType c,python,haskell,nix autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+autocmd FileType c,python,haskell,nix,vim autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 autocmd FileType purescript autocmd BufWritePre <buffer> :call <SID>PureScriptFormat()
 " autocmd BufWritePost,FileWritePost *.raml silent! !TODO generate haskell/ps etags
 

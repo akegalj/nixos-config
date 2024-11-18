@@ -43,6 +43,7 @@ let
           vim-colors-solarized
           ctrlp
           purescript-vim
+          awesome-vim-colorschemes
       ];
       vimrcConfig.customRC = builtins.readFile ./vimrc;
     };
