@@ -50,10 +50,9 @@ colorscheme badwolf
 " NOTE:
 " over summer/light use:
 "   * Xresources.light from https://github.com/solarized/xresources
-"   * colorscheme solarized
 "   * set background=light
-" for puh use:
-"   * colorscheme lightning
+"   * colorscheme solarized/solarized8/lightning
+" for terminal apply xrdb -merge ./Xresources.light
 "
 
 " make line navigation ignore line wrap
