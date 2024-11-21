@@ -21,10 +21,10 @@ let
     vim-fourmolu = pkgs.vimUtils.buildVimPlugin {
       name = "vim-fourmolu";
       src = pkgs.fetchFromGitHub {
-        owner = "feature-not-a-bug";
+        owner = "akegalj";
         repo = "vim-fourmolu";
-        rev = "0cf6dde";
-        sha256 = "DgLEzzF1RzO7mgOIoiaXiKAZfu5rX31F4YEinWyGh5g=";
+        rev = "e050bc0";
+        sha256 = "sha256-zo8vF/zGtTpDyNyBk3VWswAEJvb9rDxJiVkZwWBQKp8=";
       };
     };
 
