@@ -106,5 +106,3 @@ autocmd FileType purescript autocmd BufWritePre <buffer> :call <SID>PureScriptFo
 " autocmd BufWritePost,FileWritePost *.raml silent! !TODO generate haskell/ps etags
 
 let g:hamlet_highlight_trailing_space = 0
-
-let g:fourmolu_options = " -o \"-XOverloadedRecordDot\" "
