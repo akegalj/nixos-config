@@ -19,8 +19,12 @@ in
   time.timeZone = "Europe/Zagreb";
   console.keyMap = "croat";
   fonts.fonts = [ pkgs.ubuntu_font_family ];
-  sound.enable = true;
   nixpkgs.config.allowUnfree = true;
+
+  # TODO: switch to pipewire
+  # Pipewire has better bluetooth support (for system76 sound)
+  services.pipewire.enable = false;
+  hardware.pulseaudio.enable = true;
 
 #  services.postgresql.enable = true;
 #  services.postgresql.package = pkgs.postgresql_15;
@@ -43,7 +47,6 @@ in
       };
     };
   };
-  hardware.pulseaudio.enable = true;
 
   users.users.akegalj = {
     isNormalUser = true;
@@ -62,6 +65,8 @@ in
       texlive.combined.scheme-full
       xclip
       wget
+      # TODO: replace with pipewire
+      alsa-utils
       acpi
       lm_sensors
       (pass.withExtensions (exts: [ exts.pass-otp ]))
