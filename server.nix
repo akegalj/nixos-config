@@ -26,6 +26,7 @@
     systemPackages = [];
   };
 
+  services.pipewire.enable = false;
   services.openssh = {
     enable = true;
     settings.PasswordAuthentication = false;
