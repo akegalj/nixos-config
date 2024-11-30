@@ -21,10 +21,8 @@ in
   fonts.fonts = [ pkgs.ubuntu_font_family ];
   nixpkgs.config.allowUnfree = true;
 
-  # TODO: switch to pipewire
-  # Pipewire has better bluetooth support (for system76 sound)
-  services.pipewire.enable = false;
-  hardware.pulseaudio.enable = true;
+  # switch back to pulseaudio if pipewire won't be a good fit
+  # see here for details https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/services/audio/alsa.nix
 
 #  services.postgresql.enable = true;
 #  services.postgresql.package = pkgs.postgresql_15;
@@ -65,7 +63,11 @@ in
       texlive.combined.scheme-full
       xclip
       wget
-      # TODO: replace with pipewire
+      pavucontrol
+      # replacement for alsamixer
+      pulsemixer
+      # used in xmonad.hs to control the volume
+      # TODO: remove
       alsa-utils
       acpi
       lm_sensors

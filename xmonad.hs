@@ -35,7 +35,8 @@ main =
       , modMask = mod1Mask
       }
       `additionalKeysP` [ ("M-S-<Return>", spawnWithMaybeFocusedTerminal)
-                        , ("<XF86AudioMute>", spawn "amixer set 'Master' toggle; amixer set 'Headphone' toggle")
+                        , -- TODO: switch from amixer to wpctl and remove alsa-utils
+                          ("<XF86AudioMute>", spawn "amixer set 'Master' toggle; amixer set 'Headphone' toggle")
                         , ("<XF86AudioLowerVolume>", spawn "amixer set 'Master' 5%-; amixer set 'Headphone' 5%-")
                         , ("<XF86AudioRaiseVolume>", spawn "amixer set 'Master' 5%+; amixer set 'Headphone' 5%+")
                         , ("<XF86MonBrightnessUp>", spawn "which light && light -A 2")
