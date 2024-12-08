@@ -35,10 +35,11 @@ main =
       , modMask = mod1Mask
       }
       `additionalKeysP` [ ("M-S-<Return>", spawnWithMaybeFocusedTerminal)
-                        , -- TODO: switch from amixer to wpctl and remove alsa-utils
+                        , -- NOTE: alternatively use services.actkbd in nixos
                           ("<XF86AudioMute>", spawn "amixer set 'Master' toggle; amixer set 'Headphone' toggle")
                         , ("<XF86AudioLowerVolume>", spawn "amixer set 'Master' 5%-; amixer set 'Headphone' 5%-")
                         , ("<XF86AudioRaiseVolume>", spawn "amixer set 'Master' 5%+; amixer set 'Headphone' 5%+")
+                        , ("<XF86AudioMicMute>", spawn "amixer set 'Capture' toggle")
                         , ("<XF86MonBrightnessUp>", spawn "which light && light -A 2")
                         , ("<XF86MonBrightnessDown>", spawn "which light && C=`light -G` && [[ ${C%.*} -gt 2 ]] && light -U 2")
                         , ("M-y n", promptWSGroupAdd def "Name this group: ")

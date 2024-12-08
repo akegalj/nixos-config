@@ -5,6 +5,7 @@ in
 {
   imports =
     [
+      ./sound.nix
       ./vim.nix
     ];
 
@@ -20,36 +21,6 @@ in
   console.keyMap = "croat";
   fonts.fonts = [ pkgs.ubuntu_font_family ];
   nixpkgs.config.allowUnfree = true;
-
-  hardware.bluetooth.enable = true; # enables support for Bluetooth
-  # Pair with https://nixos.wiki/wiki/Bluetooth
-  # Use `bluetoothctl power on` to connect
-  # Use `bluetoothctl power off` to disconnect` to connect
-  hardware.bluetooth.powerOnBoot = false; # powers up the default Bluetooth controller on boot
-  services.blueman.enable = true;
-  services.pipewire.wireplumber.extraConfig."10-bluez" = {
-    "monitor.bluez.properties" = {
-      "bluez5.enable-sbc-xq" = true;
-      "bluez5.enable-msbc" = true;
-      "bluez5.enable-hw-volume" = true;
-      "bluez5.roles" = [
-        "hsp_hs"
-        "hsp_ag"
-        "hfp_hf"
-        "hfp_ag"
-      ];
-    };
-  };
-  # https://wiki.nixos.org/wiki/PipeWire
-  # services.pipewire.wireplumber.extraConfig."11-bluetooth-policy" = {
-  #   "wireplumber.settings" = {
-  #     "bluetooth.autoswitch-to-headset-profile" = false;
-  #   };
-  # };
-
-
-  # switch back to pulseaudio if pipewire won't be a good fit
-  # see here for details https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/services/audio/alsa.nix
 
 #  services.postgresql.enable = true;
 #  services.postgresql.package = pkgs.postgresql_15;
@@ -77,26 +48,17 @@ in
     isNormalUser = true;
     description = "akegalj";
     # NOTE: dialout is for arduino-ide
-    # TODO: we can probably remove audio and video as pipewire should work without them
     extraGroups = [ "networkmanager" "wheel" "video" "dialout" "audio" ];
     packages = with pkgs; [
       unstable.devenv
       firefox
       qutebrowser
-      # vimb
-      # zulip
       rxvt-unicode
       zathura
       feh
       texlive.combined.scheme-full
       xclip
       wget
-      pavucontrol
-      # replacement for alsamixer
-      pulsemixer
-      # used in xmonad.hs to control the volume
-      # TODO: remove
-      alsa-utils
       acpi
       lm_sensors
       (pass.withExtensions (exts: [ exts.pass-otp ]))
@@ -145,7 +107,6 @@ in
     interactiveShellInit = "set -o vi";
     systemPackages = [];
   };
-
 
   programs = {
     gnupg.agent.enable = true;
