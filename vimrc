@@ -44,6 +44,8 @@ set cursorline
 set wildmenu
 set incsearch
 set hlsearch
+set rulerformat=%l,%v
+" set ruler
 nnoremap <leader><space> :nohlsearch<CR>
 
 colorscheme badwolf
