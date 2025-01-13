@@ -70,7 +70,7 @@ in
       neomutt
       mpv
       scrot
-      unstable.graphite-cli
+      graphite-cli
 #      (ffmpeg.override {
 #        withXcb = true;
 #      })
