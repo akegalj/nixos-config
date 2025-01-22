@@ -14,7 +14,9 @@ in
 
   networking.networkmanager.enable = true;
   networking.hosts = {
-    "127.0.0.1" = ["dev-agents.livtours.com"];
+    # We redirect access to these sites not to waste time
+    # Life is interesting enough without those
+    "127.0.0.1" = ["news.ycombinator.com" "lobste.rs"];
   };
 
   time.timeZone = "Europe/Zagreb";
