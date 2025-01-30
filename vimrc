@@ -19,6 +19,7 @@ set nu
 set ignorecase
 set smartcase
 set autoindent
+set shortmess-=S " show number of search matches
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
