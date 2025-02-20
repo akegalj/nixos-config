@@ -52,7 +52,7 @@ in
     # NOTE: dialout is for arduino-ide
     extraGroups = [ "networkmanager" "wheel" "video" "dialout" "audio" ];
     packages = with pkgs; [
-      unstable.devenv
+      devenv
       firefox
       qutebrowser
       rxvt-unicode
