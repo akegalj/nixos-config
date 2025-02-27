@@ -18,6 +18,14 @@ in
     # Life is interesting enough without those
     "127.0.0.1" = ["news.ycombinator.com" "lobste.rs"];
   };
+#  networking.firewall = {
+#    enable = true;
+#    allowedTCPPorts = [ 3000 ];
+    #allowedUDPPortRanges = [
+    #  { from = 4000; to = 4007; }
+    #  { from = 8000; to = 8010; }
+    #];
+#  };
 
   time.timeZone = "Europe/Zagreb";
   console.keyMap = "croat";
@@ -73,6 +81,8 @@ in
       mpv
       scrot
       graphite-cli
+      # Fix problems with slack login with https://www.reddit.com/r/Slack/comments/c0gqwh/comment/huyyxm4/
+      slack
 #      (ffmpeg.override {
 #        withXcb = true;
 #      })
