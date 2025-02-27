@@ -83,6 +83,8 @@ in
       graphite-cli
       # Fix problems with slack login with https://www.reddit.com/r/Slack/comments/c0gqwh/comment/huyyxm4/
       slack
+      signal-desktop
+      discord
 #      (ffmpeg.override {
 #        withXcb = true;
 #      })
