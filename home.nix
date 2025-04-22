@@ -18,14 +18,14 @@ in
     # Life is interesting enough without those
     "127.0.0.1" = ["news.ycombinator.com" "lobste.rs"];
   };
-#  networking.firewall = {
-#    enable = true;
-#    allowedTCPPorts = [ 3000 ];
+  networking.firewall = {
+    # enable = true;
+    # allowedTCPPorts = [ 3000 ];
     #allowedUDPPortRanges = [
     #  { from = 4000; to = 4007; }
     #  { from = 8000; to = 8010; }
     #];
-#  };
+  };
 
   time.timeZone = "Europe/Zagreb";
   console.keyMap = "croat";
@@ -162,8 +162,8 @@ in
   };
   environment.sessionVariables.DEFAULT_BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
 
-  nix.binaryCaches = [ "https://nixcache.reflex-frp.org" "https://miso-haskell.cachix.org" "https://cache.iog.io"];
-  nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" "miso-haskell.cachix.org-1:6N2DooyFlZOHUfJtAx1Q09H0P5XXYzoxxQYiwn6W1e8=" "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="];
+  nix.binaryCaches = [ "https://nixcache.reflex-frp.org" "https://miso-haskell.cachix.org" "https://haskell-miso.cachix.org" "https://cache.iog.io"];
+  nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" "miso-haskell.cachix.org-1:6N2DooyFlZOHUfJtAx1Q09H0P5XXYzoxxQYiwn6W1e8=" "haskell-miso-cachix.cachix.org-1:m8hN1cvFMJtYib4tj+06xkKt5ABMSGfe8W7s40x1kQ0=" "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="];
   nix.settings = {
     trusted-users = ["root" "akegalj"];
     experimental-features = [ "nix-command" "flakes" ];
