@@ -7,6 +7,7 @@ in
     [
       ./sound.nix
       ./vim.nix
+      # ./vscode.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -83,7 +84,7 @@ in
       graphite-cli
       # Fix problems with slack login with https://www.reddit.com/r/Slack/comments/c0gqwh/comment/huyyxm4/
       slack
-      signal-desktop
+      unstable.signal-desktop
       discord
 #      (ffmpeg.override {
 #        withXcb = true;
