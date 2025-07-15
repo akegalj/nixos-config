@@ -82,6 +82,8 @@ in
       mpv
       scrot
       graphite-cli
+      jq
+      nodePackages.localtunnel
       # Fix problems with slack login with https://www.reddit.com/r/Slack/comments/c0gqwh/comment/huyyxm4/
       slack
       unstable.signal-desktop
