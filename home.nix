@@ -97,7 +97,7 @@ in
   environment = {
     etc."msmtprc".source = ./msmtprc;
     loginShellInit = let home = "/home/akegalj"; in ''
-      [[ ! -f ${home}/.haskeline ]] && echo "editMode: Vi" > ${home}/.haskeline
+      [[ ! -f ${home}/.haskeline ]] && echo -e "editMode: Vi\nmaxhistorysize: Just ${config.environment.variables.HISTSIZE}" > ${home}/.haskeline
       [[ ! -f ${home}/.inputrc ]] && echo "set editing-mode vi" > ${home}/.inputrc
       [[ ! -f ${home}/.aliases ]] && touch ${home}/.aliases
       [[ -f ${home}/.cache/mutt ]] && rm ${home}/.cache/mutt # TODO: remove later, this is temporary to fix cache
