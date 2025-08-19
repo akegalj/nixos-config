@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  devenv-1-3-1 = import <devenv-1-3-1> { config = { allowUnfree = true; }; };
 in
 {
   imports =
@@ -61,7 +62,7 @@ in
     # NOTE: dialout is for arduino-ide
     extraGroups = [ "networkmanager" "wheel" "video" "dialout" "audio" ];
     packages = with pkgs; [
-      devenv
+      devenv-1-3-1.devenv
       firefox
       qutebrowser
       rxvt-unicode
