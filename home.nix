@@ -9,6 +9,7 @@ in
       ./sound.nix
       ./vim.nix
       # ./vscode.nix
+      # ./nextcloud.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -18,11 +19,11 @@ in
   networking.hosts = {
     # We redirect access to these sites not to waste time
     # Life is interesting enough without those
-    "127.0.0.1" = ["news.ycombinator.com" "lobste.rs"];
+    "127.0.0.1" = ["news.ycombinator.com" "lobste.rs" "index.hr"];
   };
   networking.firewall = {
-    # enable = true;
-    # allowedTCPPorts = [ 3000 ];
+    #enable = true;
+    #allowedTCPPorts = [ 80 ];
     #allowedUDPPortRanges = [
     #  { from = 4000; to = 4007; }
     #  { from = 8000; to = 8010; }
