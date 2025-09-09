@@ -19,7 +19,7 @@ in
   networking.hosts = {
     # We redirect access to these sites not to waste time
     # Life is interesting enough without those
-    "127.0.0.1" = ["news.ycombinator.com" "lobste.rs" "index.hr"];
+    "127.0.0.1" = ["news.ycombinator.com" "lobste.rs" "index.hr" "youtube.com"];
   };
   networking.firewall = {
     #enable = true;
