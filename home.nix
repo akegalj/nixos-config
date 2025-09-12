@@ -64,8 +64,8 @@ in
     extraGroups = [ "networkmanager" "wheel" "video" "dialout" "audio" ];
     packages = with pkgs; [
       devenv-1-3-1.devenv
-      unstable.firefox
-      unstable.qutebrowser
+      firefox
+      qutebrowser
       rxvt-unicode
       zathura
       feh
