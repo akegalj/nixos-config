@@ -2,11 +2,14 @@
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
   devenv-1-3-1 = import <devenv-1-3-1> { config = { allowUnfree = true; }; };
+
 in
 {
   imports =
     [
-      ./sound.nix
+      # NOTE: alsa-utils from 25.05 is broken so we bumped to unstable
+      # TODO: remove unstable from sound when on 25.11+
+      (import ./sound.nix {inherit config; pkgs = unstable;})
       ./vim.nix
       # ./vscode.nix
       # ./nextcloud.nix
@@ -23,7 +26,7 @@ in
   };
   networking.firewall = {
     #enable = true;
-    #allowedTCPPorts = [ 80 ];
+    #allowedTCPPorts = [ 3000 ];
     #allowedUDPPortRanges = [
     #  { from = 4000; to = 4007; }
     #  { from = 8000; to = 8010; }
