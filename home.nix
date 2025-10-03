@@ -117,6 +117,8 @@ in
       HISTCONTROL = "ignoredups:ignorespace";
       BROWSER = "qutebrowser";
     };
+    # NOTE: temp fix for qt bug. Remove on 26.05+ . See https://bugreports.qt.io/browse/QTBUG-135787
+    shellAliases.qutebrowser = "QTWEBENGINE_CHROMIUM_FLAGS=--disable-features=PermissionElement qutebrowser";
     shellAliases.ssh = "TERM=xterm ssh";
     # shellAliases.zulip = "GDK_BACKEND=x11 zulip";
     shellAliases.ghci = "ghci -v0 -ignore-dot-ghci -ghci-script ${./ghci}";
