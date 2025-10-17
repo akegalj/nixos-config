@@ -104,7 +104,7 @@ fun! <SID>PureScriptFormat()
   endtry
 endfun
 
-autocmd FileType c,python,haskell,nix,vim,puresript autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
+autocmd FileType c,python,haskell,nix,vim,puresript,yaml autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 autocmd FileType purescript autocmd BufWritePre <buffer> :call <SID>PureScriptFormat()
 " autocmd BufWritePost,FileWritePost *.raml silent! !TODO generate haskell/ps etags
 
