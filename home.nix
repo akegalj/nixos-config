@@ -2,18 +2,29 @@
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
   devenv-1-3-1 = import <devenv-1-3-1> { config = { allowUnfree = true; }; };
-
-in
-{
-  imports =
-    [
-      # NOTE: alsa-utils from 25.05 is broken so we bumped to unstable
-      # TODO: remove unstable from sound when on 25.11+
-      (import ./sound.nix {inherit config; pkgs = unstable;})
-      ./vim.nix
-      # ./vscode.nix
-      # ./nextcloud.nix
-    ];
+  openarena-fixed = with pkgs;
+    openarena.overrideAttrs {
+      patches = openarena.patches ++ [
+        # FIX restaring UI
+        (fetchpatch {
+          url =
+            "https://github.com/cubuspl42/OpenArena-engine/commit/6044194ada5eb6b8b2bbbe1bb20e505b9a4e0455.patch";
+          hash = "sha256-mh381fegI7BRQB8/siR144sxgREiayE1tz6wQCSUIb8=";
+        })
+      ];
+    };
+in {
+  imports = [
+    # NOTE: alsa-utils from 25.05 is broken so we bumped to unstable
+    # TODO: remove unstable from sound when on 25.11+
+    (import ./sound.nix {
+      inherit config;
+      pkgs = unstable;
+    })
+    ./vim.nix
+    # ./vscode.nix
+    # ./nextcloud.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 20;
@@ -22,7 +33,8 @@ in
   networking.hosts = {
     # We redirect access to these sites not to waste time
     # Life is interesting enough without those
-    "127.0.0.1" = ["news.ycombinator.com" "lobste.rs" "index.hr" "youtube.com"];
+    "127.0.0.1" =
+      [ "news.ycombinator.com" "lobste.rs" "index.hr" "youtube.com" ];
   };
   networking.firewall = {
     #enable = true;
@@ -38,12 +50,12 @@ in
   fonts.fonts = [ pkgs.ubuntu_font_family ];
   nixpkgs.config.allowUnfree = true;
 
-#  services.postgresql.enable = true;
-#  services.postgresql.package = pkgs.postgresql_15;
-#  services.postgresql.initialScript = pkgs.writeText "psql-init" ''
-#    CREATE USER akegalj WITH SUPERUSER PASSWORD 'website';
-#    CREATE DATABASE website WITH OWNER akegalj;
-#  '';
+  #  services.postgresql.enable = true;
+  #  services.postgresql.package = pkgs.postgresql_15;
+  #  services.postgresql.initialScript = pkgs.writeText "psql-init" ''
+  #    CREATE USER akegalj WITH SUPERUSER PASSWORD 'website';
+  #    CREATE DATABASE website WITH OWNER akegalj;
+  #  '';
   services.xserver = {
     enable = true;
     layout = "hr";
@@ -53,9 +65,7 @@ in
         enable = true;
         enableContribAndExtras = true;
         config = builtins.readFile ./xmonad.hs;
-        extraPackages = haskellPackages: [
-          haskellPackages.data-default
-        ];
+        extraPackages = haskellPackages: [ haskellPackages.data-default ];
       };
     };
   };
@@ -93,15 +103,16 @@ in
       slack
       unstable.signal-desktop
       discord
-#      (ffmpeg.override {
-#        withXcb = true;
-#      })
+      #      (ffmpeg.override {
+      #        withXcb = true;
+      #      })
     ];
   };
 
   environment = {
     etc."msmtprc".source = ./msmtprc;
-    loginShellInit = let home = "/home/akegalj"; in ''
+    loginShellInit = let home = "/home/akegalj";
+    in ''
       [[ ! -f ${home}/.haskeline ]] && echo -e "editMode: Vi\nmaxhistorysize: Just ${config.environment.variables.HISTSIZE}" > ${home}/.haskeline
       [[ ! -f ${home}/.inputrc ]] && echo "set editing-mode vi" > ${home}/.inputrc
       [[ ! -f ${home}/.aliases ]] && touch ${home}/.aliases
@@ -110,7 +121,9 @@ in
       PASSWORD_STORE_DIR=${home}/.password-store
       [[ ! -f ${home}/.gnupg/sshcontrol ]] && echo "9D9341EBB28348D3718E0F1BC60C0924F77A10D2" > ${home}/.gnupg/sshcontrol
       [[ ! -d $PASSWORD_STORE_DIR ]] && pass init akegalj && pass git init && pass git remote add origin git@github.com:akegalj/pass.git && pass git config pull.rebase true && pass git pull -r --set-upstream origin main
-      [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && XINITRC=${./xinitrc} XRESOURCES=${./Xresources} exec startx
+      [[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && XINITRC=${./xinitrc} XRESOURCES=${
+        ./Xresources
+      } exec startx
     '';
     variables = {
       HISTSIZE = "10000";
@@ -118,18 +131,22 @@ in
       BROWSER = "qutebrowser";
     };
     # NOTE: temp fix for qt bug. Remove on 26.05+ . See https://bugreports.qt.io/browse/QTBUG-135787
-    shellAliases.qutebrowser = "QTWEBENGINE_CHROMIUM_FLAGS=--disable-features=PermissionElement qutebrowser";
+    shellAliases.qutebrowser =
+      "QTWEBENGINE_CHROMIUM_FLAGS=--disable-features=PermissionElement qutebrowser";
     shellAliases.ssh = "TERM=xterm ssh";
     # shellAliases.zulip = "GDK_BACKEND=x11 zulip";
     shellAliases.ghci = "ghci -v0 -ignore-dot-ghci -ghci-script ${./ghci}";
     # use `qpdf --decrypt bla.pdf uncompressed.pdf` as an alternative
-    shellAliases.uncomp = "pdftk '$(echo $FILE)' output uncompressed.pdf uncompress";
+    shellAliases.uncomp =
+      "pdftk '$(echo $FILE)' output uncompressed.pdf uncompress";
     # use ghostscript to fix any broken pdf `gs -o repaired.pdf -sDEVICE=pdfwrite -dPDFSETTINGS/prepress uncompressed.pdf`
-    shellAliases.comp = "FILE_E=`echo $FILE | sed 's/\.pdf//'` pdftk uncompressed.pdf output '$(echo $FILE_E)_fixed.pdf' compress";
-    shellAliases.scrot = "PRINT_SCREEN=~/pictures/$(date '+%Y%m%d-%H%M%S').png; scrot -s $PRINT_SCREEN && cat $PRINT_SCREEN | xclip -selection clipboard -t image/png";
+    shellAliases.comp =
+      "FILE_E=`echo $FILE | sed 's/.pdf//'` pdftk uncompressed.pdf output '$(echo $FILE_E)_fixed.pdf' compress";
+    shellAliases.scrot =
+      "PRINT_SCREEN=~/pictures/$(date '+%Y%m%d-%H%M%S').png; scrot -s $PRINT_SCREEN && cat $PRINT_SCREEN | xclip -selection clipboard -t image/png";
     shellAliases.xsel = "xclip -selection primary";
     interactiveShellInit = "set -o vi";
-    systemPackages = [];
+    systemPackages = [ ];
   };
 
   programs = {
@@ -155,9 +172,7 @@ in
     # for alternative see https://nix.dev/guides/faq#how-to-run-non-nix-executables
     nix-ld = {
       enable = true;
-      libraries = with pkgs; [
-        gmp
-      ];
+      libraries = with pkgs; [ gmp ];
     };
     direnv.enable = true;
   };
@@ -170,14 +185,25 @@ in
     "x-scheme-handler/about" = "org.qutebrowser.qutebrowser.desktop";
     "x-scheme-handler/unknown" = "org.qutebrowser.qutebrowser.desktop";
   };
-  environment.sessionVariables.DEFAULT_BROWSER = "${pkgs.qutebrowser}/bin/qutebrowser";
+  environment.sessionVariables.DEFAULT_BROWSER =
+    "${pkgs.qutebrowser}/bin/qutebrowser";
 
-  nix.binaryCaches = [ "https://nixcache.reflex-frp.org" "https://miso-haskell.cachix.org" "https://haskell-miso.cachix.org" "https://cache.iog.io"];
-  nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" "miso-haskell.cachix.org-1:6N2DooyFlZOHUfJtAx1Q09H0P5XXYzoxxQYiwn6W1e8=" "haskell-miso-cachix.cachix.org-1:m8hN1cvFMJtYib4tj+06xkKt5ABMSGfe8W7s40x1kQ0=" "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="];
+  nix.binaryCaches = [
+    "https://nixcache.reflex-frp.org"
+    "https://miso-haskell.cachix.org"
+    "https://haskell-miso.cachix.org"
+    "https://cache.iog.io"
+  ];
+  nix.binaryCachePublicKeys = [
+    "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI="
+    "miso-haskell.cachix.org-1:6N2DooyFlZOHUfJtAx1Q09H0P5XXYzoxxQYiwn6W1e8="
+    "haskell-miso-cachix.cachix.org-1:m8hN1cvFMJtYib4tj+06xkKt5ABMSGfe8W7s40x1kQ0="
+    "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+  ];
   nix.settings = {
-    trusted-users = ["root" "akegalj"];
+    trusted-users = [ "root" "akegalj" ];
     experimental-features = [ "nix-command" "flakes" ];
-    allow-import-from-derivation = ["true"];
+    allow-import-from-derivation = [ "true" ];
   };
 
   hardware.ledger.enable = true;
