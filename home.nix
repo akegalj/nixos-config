@@ -2,17 +2,6 @@
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
   devenv-1-3-1 = import <devenv-1-3-1> { config = { allowUnfree = true; }; };
-  openarena-fixed = with pkgs;
-    openarena.overrideAttrs {
-      patches = openarena.patches ++ [
-        # FIX restaring UI
-        (fetchpatch {
-          url =
-            "https://github.com/cubuspl42/OpenArena-engine/commit/6044194ada5eb6b8b2bbbe1bb20e505b9a4e0455.patch";
-          hash = "sha256-mh381fegI7BRQB8/siR144sxgREiayE1tz6wQCSUIb8=";
-        })
-      ];
-    };
 in {
   imports = [
     # NOTE: alsa-utils from 25.05 is broken so we bumped to unstable
@@ -106,7 +95,6 @@ in {
       #      (ffmpeg.override {
       #        withXcb = true;
       #      })
-      openarena-fixed
     ];
   };
 
