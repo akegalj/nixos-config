@@ -33,8 +33,8 @@ in {
   networking.hosts = {
     # We redirect access to these sites not to waste time
     # Life is interesting enough without those
-    "127.0.0.1" =
-      [ "news.ycombinator.com" "lobste.rs" "index.hr" "youtube.com" ];
+    "127.0.0.1" = ["news.ycombinator.com" "lobste.rs" "index.hr" "youtube.com"];
+    "5.67.7.45" = ["dev.livtours.com"];
   };
   networking.firewall = {
     #enable = true;
@@ -106,6 +106,7 @@ in {
       #      (ffmpeg.override {
       #        withXcb = true;
       #      })
+      openarena-fixed
     ];
   };
 
