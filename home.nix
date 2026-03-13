@@ -39,6 +39,13 @@ in {
   fonts.fonts = [ pkgs.ubuntu_font_family ];
   nixpkgs.config.allowUnfree = true;
 
+  virtualisation.waydroid.enable = true;
+  # wayland/waydroid on X11
+#  services.cage = {
+#    enable = true;
+#    user = "akegalj";  # Replace with your actual username
+#    program = "${pkgs.waydroid}/bin/waydroid show-full-ui";
+#  };
   #  services.postgresql.enable = true;
   #  services.postgresql.package = pkgs.postgresql_15;
   #  services.postgresql.initialScript = pkgs.writeText "psql-init" ''
@@ -92,6 +99,7 @@ in {
       slack
       unstable.signal-desktop
       discord
+      cage # wayland/waydroid on X11
       #      (ffmpeg.override {
       #        withXcb = true;
       #      })
