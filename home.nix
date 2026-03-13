@@ -153,6 +153,7 @@ in {
       config.safe.directory = "${./.}";
       config.core.excludesFile = "${./gitignore}";
       config.url."https://".insteadOf = "git://";
+      config.push.default = "current";
     };
     slock.enable = true;
     htop.enable = true;
