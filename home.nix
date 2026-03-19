@@ -1,7 +1,8 @@
 { config, pkgs, ... }:
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-  devenv-1-3-1 = import <devenv-1-3-1> { config = { allowUnfree = true; }; };
+  devenvPinnedUrl = "https://github.com/cachix/devenv/archive/refs/tags/v1.11.2.tar.gz";
+  devenvPinned = (import (builtins.fetchTarball devenvPinnedUrl)).packages.${pkgs.stdenv.system}.default;
 in {
   imports = [
     # NOTE: alsa-utils from 25.05 is broken so we bumped to unstable
@@ -72,7 +73,7 @@ in {
     # NOTE: dialout is for arduino-ide
     extraGroups = [ "networkmanager" "wheel" "video" "dialout" "audio" ];
     packages = with pkgs; [
-      unstable.devenv
+      devenvPinned
       firefox
       qutebrowser
       rxvt-unicode
@@ -187,12 +188,14 @@ in {
     "${pkgs.qutebrowser}/bin/qutebrowser";
 
   nix.binaryCaches = [
+    "https://cachix.cachix.org"
     "https://nixcache.reflex-frp.org"
     "https://miso-haskell.cachix.org"
     "https://haskell-miso.cachix.org"
     "https://cache.iog.io"
   ];
   nix.binaryCachePublicKeys = [
+    "cachix.cachix.org-1:eWNHQldwUO7G2VkjpnjDbWwy4KQ/HNxht7H4SSoMckM="
     "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI="
     "miso-haskell.cachix.org-1:6N2DooyFlZOHUfJtAx1Q09H0P5XXYzoxxQYiwn6W1e8="
     "haskell-miso-cachix.cachix.org-1:m8hN1cvFMJtYib4tj+06xkKt5ABMSGfe8W7s40x1kQ0="
