@@ -74,6 +74,7 @@ in {
     extraGroups = [ "networkmanager" "wheel" "video" "dialout" "audio" ];
     packages = with pkgs; [
       devenvPinned
+      # unstable.devenv
       firefox
       qutebrowser
       rxvt-unicode
@@ -93,7 +94,6 @@ in {
       neomutt
       mpv
       scrot
-      graphite-cli
       jq
       nodePackages.localtunnel # https://theboroer.github.io/localtunnel-www/
       # Fix problems with slack login with https://www.reddit.com/r/Slack/comments/c0gqwh/comment/huyyxm4/
