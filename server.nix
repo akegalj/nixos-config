@@ -9,6 +9,11 @@ in {
   boot.loader.systemd-boot.configurationLimit = 20;
   # boot.loader.efi.canTouchEfiVariables = true;
 
+  # Temp workaround for https://github.com/theori-io/copy-fail-CVE-2026-31431/issues/48#issuecomment-4352980411
+  # Remove after 26.05 and kernel 7.0+
+  boot.blacklistedKernelModules = [ "algif_aead" ];
+  boot.extraModprobeConfig = "install algif_aead /bin/false";
+
   time.timeZone = "Europe/Zagreb";
   console.keyMap = "croat";
   # nixpkgs.config.allowUnfree = true;
