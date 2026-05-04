@@ -19,6 +19,11 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 20;
 
+  # Temp workaround for https://github.com/theori-io/copy-fail-CVE-2026-31431/issues/48#issuecomment-4352980411
+  # Remove after 26.05 and kernel 7.0+
+  boot.blacklistedKernelModules = [ "algif_aead" ];
+  boot.extraModprobeConfig = "install algif_aead /bin/false";
+
   networking.networkmanager.enable = true;
   networking.hosts = {
     # We redirect access to these sites not to waste time
