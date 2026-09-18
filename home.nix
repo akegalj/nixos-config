@@ -42,7 +42,7 @@ in {
 
   time.timeZone = "Europe/Zagreb";
   console.keyMap = "croat";
-  fonts.fonts = [ pkgs.ubuntu_font_family ];
+  fonts.fonts = [ pkgs.ubuntu-classic ];
   nixpkgs.config.allowUnfree = true;
 
   virtualisation.waydroid.enable = true;
@@ -100,7 +100,7 @@ in {
       mpv
       scrot
       jq
-      nodePackages.localtunnel # https://theboroer.github.io/localtunnel-www/
+      localtunnel # https://theboroer.github.io/localtunnel-www/
       # Fix problems with slack login with https://www.reddit.com/r/Slack/comments/c0gqwh/comment/huyyxm4/
       slack
       unstable.signal-desktop
@@ -171,7 +171,9 @@ in {
     };
     slock.enable = true;
     htop.enable = true;
-    light.enable = true;
+    # FIXME: doesn't exist any more
+    # light.enable = true;
+
     # used for livtours frontend dev
     # for alternative see https://nix.dev/guides/faq#how-to-run-non-nix-executables
     nix-ld = {

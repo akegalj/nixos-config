@@ -51,5 +51,7 @@ in
 {
   environment.variables = { EDITOR = "vim"; };
   environment.systemPackages = [ myvim ];
-  users.users.akegalj.packages = [ pkgs.haskellPackages.fourmolu pkgs.haskellPackages.hasktags pkgs.nodePackages.purs-tidy ];
+  users.users.akegalj.packages = [ pkgs.haskellPackages.fourmolu pkgs.haskellPackages.hasktags ];
+  # pkgs.nodePackages.purs-tidy ];
+  # FIXME: see devenv.nix for adding purescript overlay for purs-tidy
 }
