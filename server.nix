@@ -16,7 +16,7 @@ in {
 
   time.timeZone = "Europe/Zagreb";
   console.keyMap = "croat";
-  # nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = true;
 
   users.users.akegalj = {
     isNormalUser = true;
