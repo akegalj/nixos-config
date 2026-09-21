@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-  devenv-2-2-2 = (import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/c7dc62c427f68c487f2a0bd94ff4f45840a696cc.tar.gz") {}).devenv;
+  devenv-2-2-2 =
+    (import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/c7dc62c427f68c487f2a0bd94ff4f45840a696cc.tar.gz")
+      { config = config.nixpkgs.config; }
+    ).devenv;
 in {
   imports = [
     # NOTE: alsa-utils from 25.05 is broken so we bumped to unstable
