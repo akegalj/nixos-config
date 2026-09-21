@@ -1,8 +1,7 @@
 { config, pkgs, ... }:
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-  devenvPinnedUrl = "https://github.com/cachix/devenv/archive/refs/tags/v1.11.2.tar.gz";
-  devenvPinned = (import (builtins.fetchTarball devenvPinnedUrl)).packages.${pkgs.stdenv.system}.default;
+  devenv-2-2-2 = (import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/c7dc62c427f68c487f2a0bd94ff4f45840a696cc.tar.gz") {}).devenv;
 in {
   imports = [
     # NOTE: alsa-utils from 25.05 is broken so we bumped to unstable
@@ -78,8 +77,8 @@ in {
     # NOTE: dialout is for arduino-ide
     extraGroups = [ "networkmanager" "wheel" "video" "dialout" "audio" ];
     packages = with pkgs; [
-      # devenvPinned
-      unstable.devenv
+      # unstable.devenv
+      devenv-2-2-2
       firefox
       qutebrowser
       rxvt-unicode
