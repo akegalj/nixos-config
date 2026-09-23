@@ -1,5 +1,8 @@
 { config, pkgs, ... }:
 
+# NOTE: for updating server on low end machines see
+#   * https://yashgarg.dev/posts/nixos-on-low-memory-servers/
+#   * nix-store --help --import     => see Examples
 let
   # unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in {
