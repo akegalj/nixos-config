@@ -102,6 +102,7 @@ in {
       mpv
       scrot
       jq
+      yq
       localtunnel # https://theboroer.github.io/localtunnel-www/
       # Fix problems with slack login with https://www.reddit.com/r/Slack/comments/c0gqwh/comment/huyyxm4/
       slack
