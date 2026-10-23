@@ -48,6 +48,12 @@ in {
   nixpkgs.config.allowUnfree = true;
 
   virtualisation.waydroid.enable = true;
+  # These 3 lines are a workaround https://github.com/NixOS/nixpkgs/pull/466473
+  # TODO: remove in 26.11+
+  networking.nftables.enable = false;
+  networking.firewall.package = pkgs.iptables-legacy;
+  virtualisation.waydroid.package = pkgs.waydroid-nftables;
+
   # wayland/waydroid on X11
 #  services.cage = {
 #    enable = true;
